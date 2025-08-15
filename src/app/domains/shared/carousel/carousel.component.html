@@ -1,35 +1,68 @@
-<div id="my-carousel" class="relative w-full"  [attr.data-carousel]="isStatic() ? 'static' : 'slide'"
-  (mouseenter)="isStatic.set(false)"
-  (mouseleave)="isStatic.set(true)"
- >
-  <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-    @for (img of images; track $index) {
-      <div class="hidden duration-700 ease-in-out" data-carousel-item>
-        <img [src]="img" class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2" alt="" />
+<div #root class="relative w-full" data-carousel="slide">
+  <!-- Contenedor de slides -->
+  <div class="relative  rounded-lg" ngClass="{{ heightClass }}">
+    <ng-container *ngIf="images?.length; else empty">
+      <ng-container *ngFor="let src of images; let i = index; trackBy: trackByIndex">
+        <!-- CAMBIO 1: el slide ocupa TODO el contenedor -->
+        <div class="hidden duration-700 ease-in-out absolute inset-0"
+             [attr.data-carousel-item]="i === 0 ? 'active' : ''">
+          <!-- CAMBIO 2: la imagen usa el alto/ancho del slide; sin absolute -->
+          <img
+            [ngSrc]="src"
+            width="200"
+            height="200"
+            class="block w-full object-cover select-none"
+            [alt]="'Imagen ' + (i + 1)"
+            loading="lazy"
+          />
+        </div>
+      </ng-container>
+    </ng-container>
+
+    <ng-template #empty>
+      <div class="flex items-center justify-center w-full h-full text-sm text-gray-500">
+        Sin imágenes
       </div>
-    }
+    </ng-template>
   </div>
 
-  <div class="absolute z-30 flex space-x-3 -translate-x-1/2 bottom-5 left-1/2">
-    @for (img of images; track $index) {
-      <button type="button" class="w-3 h-3 rounded-full" [attr.data-carousel-slide-to]="$index"></button>
-    }
+  <!-- Indicadores (punticos) -->
+  <div *ngIf="images.length > 1"
+       class="absolute z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse bottom-3 left-1/2">
+    <button
+      *ngFor="let _ of images; let i = index; trackBy: trackByIndex"
+      type="button"
+      class="w-3 h-3 rounded-full"
+      [attr.aria-label]="'Ir al slide ' + (i + 1)"
+      [attr.data-carousel-slide-to]="i">
+    </button>
   </div>
 
-  <button type="button" class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4" data-carousel-prev>
-    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30">
-      <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" viewBox="0 0 6 10" fill="none">
-        <path d="M5 1 1 5l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+  <!-- Flecha anterior -->
+  <button
+    *ngIf="images.length > 1"
+    type="button"
+    class="absolute inset-y-0 left-0 z-30 flex items-center justify-center px-4 cursor-pointer group focus:outline-none"
+    data-carousel-prev>
+    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 focus:ring-4 focus:ring-white">
+      <svg class="w-4 h-4 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10" aria-hidden="true">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4"/>
       </svg>
-      <span class="sr-only">Previous</span>
+      <span class="sr-only">Anterior</span>
     </span>
   </button>
-  <button type="button" class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4" data-carousel-next>
-    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30">
-      <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" viewBox="0 0 6 10" fill="none">
-        <path d="m1 9 4-4-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- Flecha siguiente -->
+  <button
+    *ngIf="images.length > 1"
+    type="button"
+    class="absolute inset-y-0 right-0 z-30 flex items-center justify-center px-4 cursor-pointer group focus:outline-none"
+    data-carousel-next>
+    <span class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 group-hover:bg-white/50 focus:ring-4 focus:ring-white">
+      <svg class="w-4 h-4 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10" aria-hidden="true">
+        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
       </svg>
-      <span class="sr-only">Next</span>
+      <span class="sr-only">Siguiente</span>
     </span>
   </button>
 </div>

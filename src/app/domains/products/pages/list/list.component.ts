@@ -4,12 +4,12 @@ import { CommonModule } from '@angular/common';
 import { Product } from '../../../shared/models/product.model';
 import { HeaderComponent } from "../../../shared/components/header/header.component";
 import { CartService } from '../../../shared/services/cart.service';
-import { CarouselComponent } from "../../../shared/carousel/carousel.component";
+
 import { ProductService } from '../../../shared/services/product.service';
 
 @Component({
   selector: 'app-list',
-  imports: [ProductComponent, CommonModule, HeaderComponent, CarouselComponent],
+  imports: [ProductComponent, CommonModule, HeaderComponent, ],
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.css']
 })
@@ -21,7 +21,17 @@ export class ListComponent {
   products = signal<Product[]>([]);
   hideSidebar = signal(true);
 
-
+  ngOnInit() {
+    this.productService.getProducts().subscribe({
+      next: (currentProducts) => {
+        this.products.set(currentProducts);
+        console.log('Products fetched successfully:', currentProducts);
+      },
+      error: (error) => {
+        console.error('Error fetching products:', error);
+      }
+  })
+}
 // constructor() {
 //   // Initialize any necessary properties or services here
 // const initialProducts: Product[] = [

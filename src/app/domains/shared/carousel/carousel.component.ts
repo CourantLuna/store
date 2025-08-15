@@ -1,52 +1,32 @@
-import { Component, AfterViewInit, ElementRef, inject, signal, Input } from '@angular/core';
-import { Carousel, type CarouselOptions } from 'flowbite';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { initFlowbite } from 'flowbite';
 
 @Component({
   selector: 'app-carousel',
   standalone: true,
+  imports: [CommonModule, NgOptimizedImage],
   templateUrl: './carousel.component.html',
 })
-export class CarouselComponent implements AfterViewInit {
-  private elRef = inject(ElementRef);
+export class CarouselComponent implements AfterViewInit, OnChanges {
+  /** URLs de imágenes */
+  @Input({ required: true }) images: string[] = [];
+  /** Alto del carrusel vía clases Tailwind (ajustable) */
+  @Input() heightClass = 'h-48';
 
-  @Input() images: string[] = [
-    'https://picsum.photos/640/640?r=1',
-    'https://picsum.photos/640/640?r=2',
-    'https://picsum.photos/640/640?r=3',
-    'https://picsum.photos/640/640?r=4',
-    'https://picsum.photos/640/640?r=5',
-  ];
+  @ViewChild('root', { static: true }) rootEl!: ElementRef<HTMLElement>;
 
-  private carousel!: Carousel;
+  ngAfterViewInit(): void {
+    // Inicializa Flowbite cuando el DOM ya está renderizado
+    initFlowbite();
+  }
 
-    isStatic = signal(true);
-
-  toggleMode() {
-    this.isStatic.set(!this.isStatic());
-    if (this.isStatic()) {
-      this.pausarCarrousel();
-    } else {
-      this.carousel.cycle();
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['images'] && !changes['images'].firstChange) {
+      // Re-inicializa si cambian las imágenes
+      queueMicrotask(() => initFlowbite());
     }
   }
 
-  ngAfterViewInit() {
-    const el = this.elRef.nativeElement.querySelector('#my-carousel') as HTMLElement;
-
-    const options: CarouselOptions = {
-      // desactiva autoplay
-      interval: 0,
-    };
-
-    // 👇 OJO: options va en el 3er argumento
-    this.carousel = new Carousel(el, undefined, options);
-    this.carousel.cycle()
-    // autoplay solo cuando hay hover
-  }
-
-  pausarCarrousel() {
-    this.carousel.pause();
-  }
+  trackByIndex(i: number) { return i; }
 }
-
-

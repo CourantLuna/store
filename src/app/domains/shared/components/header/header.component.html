@@ -98,7 +98,7 @@
     <ul class="mt-4 space-y-4 max-h-[80vh] overflow-y-auto">
       <li *ngFor="let product of cartProducts()">
         <div class="flex items-center space-x-4 border-b border-gray-200 dark:border-gray-700 pb-4">
-          <img [src]="product.imageUrl" alt="{{ product.title }}" class="w-12 h-12 rounded-md" />
+          <img [src]="product.images?.[0]"  alt="{{ product.title }}" class="w-12 h-12 rounded-md" />
           <div>
             <h4 class="text-sm font-semibold text-gray-800 dark:text-white">{{ product.title }}</h4>
             <p class="text-xs text-gray-600 dark:text-gray-400">{{ product.price | currency }}</p>
