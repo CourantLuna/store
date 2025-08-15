@@ -1,0 +1,76 @@
+    <!-- <a href="#" class="w-full overflow-hidden  bg-gray-200 dark:bg-gray-700"> -->
+
+<!-- product-card.component.html -->
+<div class="w-full bg-white border border-gray-200 rounded-lg shadow-sm dark:bg-gray-800 dark:border-gray-700 group">
+  <!-- Imagen -->
+  <div class="w-full h-48  overflow-hidden rounded-t-lg group-hover:opacity-75">
+    @if (!isLoading() && product.images) {
+      @if ( product.images.length > 1) {
+        <app-carousel [images]="product.images" class="w-full h-full"></app-carousel>
+      } @else {
+        <img
+          [src]="product.images[0]"
+          alt="product image"
+          class="w-full h-full object-cover object-center"
+        />
+      }
+    } @else {
+      <div class="w-full h-full animate-pulse bg-gray-300 dark:bg-gray-600"></div>
+    }
+  </div>
+
+  <!-- Info -->
+  <div class="flex flex-col space-y-2 p-4 w-full">
+
+    <!-- Título -->
+    @if (!isLoading()) {
+      <a href="#">
+        <h5 class="text-xl font-semibold tracking-tight text-gray-700 dark:text-white">{{ product.title }}</h5>
+      </a>
+    } @else {
+      <div class="h-5 w-3/4 bg-gray-300 dark:bg-gray-600 rounded animate-pulse"></div>
+    }
+
+    <!-- Calificación (placeholder para simplificar) -->
+    <div class="flex items-center mt-2.5 mb-5">
+      <div class="h-4 w-24 bg-yellow-300 dark:bg-yellow-600 rounded animate-pulse" *ngIf="isLoading(); else ratingStars"></div>
+      <ng-template #ratingStars>
+        <!-- Aquí pondrías los SVGs reales si no está cargando -->
+        <span class="text-yellow-400 text-sm">★★★★☆</span>
+        <span class="bg-blue-100 text-blue-800 text-xs font-semibold px-2.5 py-0.5 rounded-sm dark:bg-blue-200 dark:text-blue-800 ms-3">5.0</span>
+      </ng-template>
+    </div>
+
+   <div class="flex items-center justify-start">
+     <!-- Fecha de creación -->
+    @if (!isLoading()) {
+      <span class="text-sm text-gray-500 dark:text-gray-400"> {{ product.creationAt | date: 'mediumDate' }}</span>
+    } @else {
+      <div class="h-4 w-2/4 bg-gray-300 dark:bg-gray-600 rounded animate-pulse"></div>
+    }
+
+   </div>
+
+
+    <!-- Precio + botón -->
+    <div class="flex items-center justify-between gap-4">
+      @if (!isLoading()) {
+        <span class="text-3xl font-bold text-gray-900 dark:text-white">${{ product.price }}</span>
+      } @else {
+        <div class="h-6 w-20 bg-gray-300 dark:bg-gray-600 rounded animate-pulse"></div>
+      }
+
+      @if (!isLoading()) {
+        <button
+          (click)="addCartHandler()"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none
+                 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center
+                 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 cursor-pointer">
+          Add to cart
+        </button>
+      } @else {
+        <div class="h-10 w-24 rounded-lg bg-gray-300 dark:bg-gray-600 animate-pulse"></div>
+      }
+    </div>
+  </div>
+</div>

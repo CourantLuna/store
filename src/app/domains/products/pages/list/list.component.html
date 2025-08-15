@@ -1,0 +1,18 @@
+<div class="flex flex-col h-screen bg-gray-100 dark:bg-gray-900">
+
+  <!-- Header fijo -->
+  <app-header [hideSidebar]="hideSidebar" class="shrink-0"></app-header>
+    <app-carousel></app-carousel>
+
+  <!-- Contenido que ocupa todo el alto restante -->
+  <div class="flex-1 overflow-auto mx-auto w-full">
+    <div class="flex flex-wrap gap-8 p-5 w-full mx-auto max-w-7xl justify-center">
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+        @for (product of products(); track $index) {
+        <app-product [product]="product" (addToCart)="addToCart($event)" />
+      }
+      </div>
+    </div>
+  </div>
+
+</div>
