@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, effect, EventEmitter, Input, input, Output, signal } from '@angular/core';
-import { Product } from '../../../shared/models/product.model';
-import { CarouselComponent } from "../../../shared/carousel/carousel.component";
+import { Product } from '@shared/models/product.model';
+import { CarouselComponent } from "@shared/carousel/carousel.component";
+import { ReversePipe } from '@shared/pipes/reverse.pipe';
+import { TimeAgoPipe } from '@shared/pipes/time-ago.pipe';
 
 @Component({
   selector: 'app-product',
-  imports: [CommonModule, CarouselComponent],
+  imports: [CommonModule, CarouselComponent, ReversePipe, TimeAgoPipe ],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
@@ -18,13 +20,13 @@ export class ProductComponent {
 
    // Efecto para esperar que la imagen cargue
   constructor() {
-    // effect(() => {
-    //   if (!this.product) return;
+    effect(() => {
+      if (!this.product) return;
 
-    //   const img = new Image();
-    //   img.src = this.product.imageUrl;
-    //   img.onload = () => this.isLoading.set(false);
-    // });
+      const img = new Image();
+      img.src = this.product.images?.[0] || '';
+      img.onload = () => this.isLoading.set(false);
+    });
   }
 
  addCartHandler() {

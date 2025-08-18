@@ -6,6 +6,7 @@ import { Product } from '../models/product.model';
 })
 export class CartService {
 
+  hideSidebar = signal(true);
   cart = signal<Product[]>([]);
   total = computed(() => {
     return this.cart().reduce((total, product) => total + product.price, 0);
@@ -16,5 +17,14 @@ export class CartService {
   addToCart(product: Product) {
     console.log(`Adding to cart: ${JSON.stringify(product)}`);
     this.cart.update(cartItems => [...cartItems, product]);
+    this.hideSidebar.set(false);
+  }
+
+  getHideSidebar() {
+    return this.hideSidebar();
+  }
+
+  setHideSidebar(value: boolean) {
+    this.hideSidebar.set(value);
   }
 }

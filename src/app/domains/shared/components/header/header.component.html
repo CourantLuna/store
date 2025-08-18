@@ -16,19 +16,19 @@
 
       <ul class="flex space-x-6 text-gray-700 dark:text-gray-300">
         <li>
-          <a href="#" class="block underline hover:underline">Home</a>
+          <a routerLink="/" class="block underline hover:underline">Home</a>
         </li>
         <li>
-          <a href="#" class="block hover:underline">About</a>
+          <a routerLink="/about" class="block hover:underline">About</a>
         </li>
         <li>
-          <a href="#" class="block hover:underline">Services</a>
+          <a routerLink="/services" class="block hover:underline">Services</a>
         </li>
       </ul>
     </div>
 
     <!-- Icon / Cart Button -->
-      <button class="px-4 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition cursor-pointer"
+      <button class="relative px-4 text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition cursor-pointer"
       type="button"
       (click)="toggleSidebar()"
       aria-label="Cart"
@@ -55,7 +55,7 @@
         </svg>
        @if (cartProducts().length>1) {
          <span class="sr-only">Notifications</span>
-  <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full top-2 end-4 dark:border-gray-900">
+  <div class="absolute inline-flex items-center justify-center w-6 h-6 text-xs font-bold text-white bg-red-500 border-2 border-white rounded-full -top-3 end-1 dark:border-gray-900">
     {{ cartProducts().length }}
   </div>
        }
@@ -71,7 +71,7 @@
 <!-- Sidebar -->
 <div
   class="fixed border-l-1 border-l-gray-300 dark:border-l-gray-600 top-0 right-0 bg-red z-40 w-72 h-screen p-4 overflow-y-auto transition-transform bg-white dark:bg-gray-900 "
-  [class.translate-x-full]="hideSidebar() "
+  [class.translate-x-full]="hideSidebar "
 >
   <div class="flex justify-between items-center">
     <p class="text-xl text-gray-800 dark:text-white">My Cart</p>

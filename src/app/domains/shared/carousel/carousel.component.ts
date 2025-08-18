@@ -12,7 +12,7 @@ export class CarouselComponent implements AfterViewInit, OnChanges {
   /** URLs de imágenes */
   @Input({ required: true }) images: string[] = [];
   /** Alto del carrusel vía clases Tailwind (ajustable) */
-  @Input() heightClass = 'h-48';
+  @Input() heightClass = 'h-58';
 
   @ViewChild('root', { static: true }) rootEl!: ElementRef<HTMLElement>;
 
