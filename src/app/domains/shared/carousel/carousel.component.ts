@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnChanges, Output, SimpleChanges, ViewChild } from '@angular/core';
 import { CommonModule, NgOptimizedImage } from '@angular/common';
 import { initFlowbite } from 'flowbite';
 
@@ -29,4 +29,12 @@ export class CarouselComponent implements AfterViewInit, OnChanges {
   }
 
   trackByIndex(i: number) { return i; }
+
+  onImgError(event: Event) {
+    const target = event.target as HTMLImageElement;
+    target.src = "https://placehold.co/400x400?text=No+Image";
+  }
+
+
+  
 }

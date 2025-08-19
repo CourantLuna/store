@@ -4,10 +4,11 @@ import { Product } from '@shared/models/product.model';
 import { CarouselComponent } from "@shared/carousel/carousel.component";
 import { ReversePipe } from '@shared/pipes/reverse.pipe';
 import { TimeAgoPipe } from '@shared/pipes/time-ago.pipe';
+import { RouterLink } from '@angular/router'
 
 @Component({
   selector: 'app-product',
-  imports: [CommonModule, CarouselComponent, ReversePipe, TimeAgoPipe ],
+  imports: [CommonModule, CarouselComponent, ReversePipe, TimeAgoPipe, RouterLink],
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
@@ -28,6 +29,12 @@ export class ProductComponent {
       img.onload = () => this.isLoading.set(false);
     });
   }
+
+  onImgError(event: Event) {
+    const target = event.target as HTMLImageElement;
+    target.src = "https://placehold.co/400x400?text=No+Image";
+  }
+  
 
  addCartHandler() {
   console.log('add to cart', this.product);

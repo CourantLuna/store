@@ -1,11 +1,11 @@
 import { Component, AfterViewInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+
 import { signal } from '@angular/core';
 
 @Component({
   selector: 'app-toggle-theme-fab',
   standalone: true,
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './toggle-theme-fab.component.html',
   styleUrls: ['./toggle-theme-fab.component.css']
 })

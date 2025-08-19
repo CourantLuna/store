@@ -16,22 +16,23 @@
 
       <ul class="flex space-x-6 text-gray-700 dark:text-gray-300">
         <li>
-          <a routerLink="/" class="block underline hover:underline"
-          [class.underline]="isActive('/', true)"
-          [attr.aria-current]="isActive('/', true) ? 'page' : null"
+          <a routerLink="/" 
+          routerLinkActive="underline"
+          [routerLinkActiveOptions]="{ exact: true }"
+          class="block  hover:underline"
+          aria-current="page"
           >
           Home</a>
         </li>
         <li>
-          <a routerLink="/about" class="block hover:underline"
-          [class.underline]="isActive('/about')"
-          [attr.aria-current]="isActive('/about') ? 'page' : null"
+          <a routerLink="/about" 
+          class="block hover:underline"
+          routerLinkActive="underline"
           >About</a>
         </li>
         <li>
           <a routerLink="/services" class="block hover:underline"
-          [class.underline]="isActive('/services')"
-          [attr.aria-current]="isActive('/services') ? 'page' : null"
+          routerLinkActive="underline"
           >Services</a>
         </li>
       </ul>
@@ -106,7 +107,8 @@
 
   <div class="mt-6 ">
     <ul class="mt-4 space-y-4 max-h-[80vh] overflow-y-auto">
-      <li *ngFor="let product of cartProducts()">
+      @for (product of cartProducts(); track product) {
+<li>
         <div class="flex items-center space-x-4 border-b border-gray-200 dark:border-gray-700 pb-4">
           <img [src]="product.images?.[0]"  alt="{{ product.title }}" class="w-12 h-12 rounded-md" />
           <div>
@@ -115,6 +117,7 @@
           </div>
         </div>
       </li>
+}
     </ul>
 
     <div class="mt-4 fixed">

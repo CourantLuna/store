@@ -1,9 +1,11 @@
+import { Category } from "./category.model";
+
 export interface Product {
   id: number;
   title: string;
   price: number;
   description?: string;
-  category?: categoryObject;
+  category?: Category;
   images?: string[];
   creationAt: Date;
   updatedAt?: Date;
@@ -16,11 +18,4 @@ export interface Product {
 
 }
 
-export interface categoryObject {
-  id: number;
-  name: string;
-  image: string;
-  slug: string;
-  creationAt: Date;
-  updatedAt: Date;
-}
+
