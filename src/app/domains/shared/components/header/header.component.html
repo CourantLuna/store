@@ -16,13 +16,23 @@
 
       <ul class="flex space-x-6 text-gray-700 dark:text-gray-300">
         <li>
-          <a routerLink="/" class="block underline hover:underline">Home</a>
+          <a routerLink="/" class="block underline hover:underline"
+          [class.underline]="isActive('/', true)"
+          [attr.aria-current]="isActive('/', true) ? 'page' : null"
+          >
+          Home</a>
         </li>
         <li>
-          <a routerLink="/about" class="block hover:underline">About</a>
+          <a routerLink="/about" class="block hover:underline"
+          [class.underline]="isActive('/about')"
+          [attr.aria-current]="isActive('/about') ? 'page' : null"
+          >About</a>
         </li>
         <li>
-          <a routerLink="/services" class="block hover:underline">Services</a>
+          <a routerLink="/services" class="block hover:underline"
+          [class.underline]="isActive('/services')"
+          [attr.aria-current]="isActive('/services') ? 'page' : null"
+          >Services</a>
         </li>
       </ul>
     </div>
